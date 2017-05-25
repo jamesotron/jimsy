@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "jimsy/version"
@@ -9,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["James Harton"]
   spec.email         = ["james@rabidtech.co.nz"]
 
-  spec.summary       = %q{The story of my life}
-  spec.description   = %q{Handy stuff I need to do in my life}
+  spec.summary       = "The story of my life"
+  spec.description   = "Handy stuff I need to do in my life"
   spec.homepage      = "https://github.com/jamesotron/jimsy"
   spec.license       = "MIT"
 
@@ -23,7 +24,7 @@ Gem::Specification.new do |spec|
       "public gem pushes."
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   spec.bindir        = "exe"
@@ -33,5 +34,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_dependency("thor", "~> 0.19.4")
+  spec.add_development_dependency "rubocop"
+
+  spec.add_dependency("thor")
+  spec.add_dependency("nokogiri")
 end

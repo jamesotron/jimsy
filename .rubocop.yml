@@ -1,0 +1,13 @@
+inherit_from:
+  - https://bitbucket.org/rabidtech/rabid-dotfiles/raw/44dbba7422ccbbbe2c4e6b8b27afb6a490465c28/.rubocop.yml
+
+Rails:
+  Enabled: false
+
+Style/FileName:
+  Exclude:
+    - "**/Gemfile"
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*.gemspec"
