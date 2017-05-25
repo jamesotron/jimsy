@@ -4,22 +4,18 @@ require "jimsy/bus_service"
 
 module Jimsy
   class CLI < Thor
-    # rubocop:disable Metrics/AbcSize
-
     desc "bus", "List the next bunch of busses for a given stop"
-    option :stop_number, default: BusService::DEFAULT_STOP
+    option :stop_number, default: BusService.default_stop
     option :services, default: BusService::DEFAULT_SERVICES, type: :array
     option :filter, default: true, type: :boolean
     def bus
       service = BusService.new(options[:stop_number])
       service.departures.each do |departure|
-        next if options[:filter] && !options[:services].member?(departure.service)
-
-        if options[:services].member?(departure.service)
-          say("#{departure.service} leaves in #{departure.when}", :yellow)
+        if departure.member?(options[:services])
+          say(departure.to_s, :yellow)
         else
           next if options[:filter]
-          say("#{departure.service} leaves in #{departure.when}")
+          say(departure.to_s)
         end
       end
     end
