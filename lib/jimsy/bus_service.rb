@@ -5,6 +5,7 @@ require "net/http"
 module Jimsy
   class BusService
     require "jimsy/bus_service/departure"
+    require "jimsy/bus_service/stop"
 
     # This MetLink code came from Eoin, who is very nice for sharing it with me.
     DEFAULT_STOPS = {
@@ -26,13 +27,15 @@ module Jimsy
       page.css(".rt-info-content tr").map do |tr|
         row = tr.css("td").map { |td| td.text.strip }
         next unless row.size == 4
-        Departure.new(stop, *row)
+        Departure.new(*row)
       end.compact
     end
 
-    private
+    def stop
+      Stop.find(@stop)
+    end
 
-    attr_reader :stop
+    private
 
     # .../departures        returns 20 results
     # .../departures?more=1 returns 40 results
@@ -42,7 +45,7 @@ module Jimsy
     # etc.
     def page
       @page ||= begin
-        uri = URI("https://www.metlink.org.nz/stop/#{stop}/departures?more=4")
+        uri = URI("https://www.metlink.org.nz/stop/#{stop.id}/departures?more=4")
         response = Net::HTTP.get(uri)
         Nokogiri::HTML(response)
       end
