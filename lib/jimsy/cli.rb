@@ -24,6 +24,12 @@ module Jimsy
       end
     end
 
+    desc "password", "Generate a customer-friendly random password"
+    def password
+      words = File.read("/usr/share/dict/words").split("\n")
+      puts "#{words[rand(words.size)]}-#{words[rand(words.size)]}-#{rand(999)}"
+    end
+
     desc "git SUBCOMMAND ...ARGS", "git stuff"
     subcommand :git, Git
   end
